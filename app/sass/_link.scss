@@ -1,0 +1,32 @@
+.link {
+  font-size: 12px;
+  letter-spacing: 1.1px;
+  color: rgb(255, 255, 255);
+  text-transform: uppercase;
+  border-bottom: 1px solid #ff4d00;
+  transition: border .3s ease-in-out;
+  @include AvenirLTStd-Heavy();
+
+  &:hover { border-color: #fff }
+}
+@media (min-width: $phone-landscape) {
+  .link {
+
+  }
+}
+@media (min-width: $tablet-portrait) {
+  .link {
+
+  }
+}
+@media (min-width: $tablet-landscape) {
+  .link {
+
+  }
+}
+@media (min-width: $desktop) {
+  .link {
+
+  }
+}
+

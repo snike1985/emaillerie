@@ -1,0 +1,48 @@
+.situation {
+  padding: 15px;
+
+  &__description {
+
+
+    &-column {
+
+    }
+  }
+
+  &__list {
+
+  }
+}
+@media (min-width: $phone-landscape) {
+  .situation {
+
+  }
+}
+@media (min-width: $tablet-portrait) {
+  .situation {
+
+  }
+}
+@media (min-width: $tablet-landscape) {
+  .situation {
+    padding: 150px 50px;
+
+    &__description {
+      display: flex;
+      align-items: center;
+      max-width: 1290px;
+      margin: 0 auto;
+      padding: 0 50px;
+
+      &-column {
+        width: 50%;
+      }
+    }
+  }
+}
+@media (min-width: $desktop) {
+  .situation {
+
+  }
+}
+

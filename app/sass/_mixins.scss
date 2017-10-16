@@ -1,6 +1,29 @@
 //fonts
-@mixin main-font1() {
-  font-family: "myriadpro-regular", sans-serif;
+@mixin AvenirLTStd-Heavy() {
+  font-family: "AvenirLTStd-Heavy", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+@mixin AvenirLTStd-Black() {
+  font-family: "AvenirLTStd-Black", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@mixin AvenirLTStd-Light() {
+  font-family: "AvenirLTStd-Light", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@mixin AvenirLTStd-Medium() {
+  font-family: "AvenirLTStd-Medium", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@mixin AvenirLTStd-Roman() {
+  font-family: "AvenirLTStd-Roman", sans-serif;
   font-weight: 400;
   font-style: normal;
 }

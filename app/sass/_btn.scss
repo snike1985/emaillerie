@@ -1,38 +1,44 @@
 .btn {
-  border: none;
-  height: 50px;
-  padding: 0 10px;
-  color: $btn-color;
-  display: flex;
-  text-align: left;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  font-size: 14px;
-  background: $btn-back;
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: rgb(61, 46, 79);
+  text-transform: uppercase;
+  text-align: center;
+  border: 2px solid #ff4e00;
+  @include AvenirLTStd-Heavy();
+  box-shadow: 0 18px 30px rgba(255,78,0,.06);
 
-  &:hover {
-    background: $btn-back-hover;
+  &.active {
+    color: #fff;
+    background: #ff4e00;
   }
+}
 
-  &:active {
-    color: $btn-color-active;
-    background: $btn-back-active;
+@media (min-width: $phone-landscape) {
+  .btn {
+
   }
+}
+@media (min-width: $tablet-portrait) {
+  .btn {
 
-  &_2 {
-    width: 150px;
-    height: 40px;
-    background: $btn-2-back;
+  }
+}
+@media (min-width: $tablet-landscape) {
+  .btn {
+    padding: 16px 37px;
+    transition: color .3s ease-in-out, background .3s ease-in-out;
 
     &:hover {
-      background: $btn-2-back-hover;
-    }
-
-    &:active {
-      color: $btn-2-color-active;
-      background: $btn-2-back-active;
+      color: #fff;
+      background: #ff4e00;
     }
   }
+}
+@media (min-width: $desktop) {
+  .btn {
 
+  }
 }

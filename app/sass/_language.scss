@@ -1,0 +1,114 @@
+.language {
+  @include absoluteCenterY();
+  right: 5px;
+  width: 81px;
+  height: 36px;
+  cursor: pointer;
+
+  &:after {
+    @include absoluteCenterY();
+    right: 10px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 4px 3.5px 0 3.5px;
+    border-color: #ff4d00 transparent transparent transparent;
+    transition: border .3s ease-in-out;
+    content: '';
+  }
+
+  &.open {
+    border-radius: 3px 3px 0 0;
+    background-color: #fff;
+
+    &:after {
+      border-style: solid;
+      border-width: 0 3.5px 4px 3.5px;
+      border-color: transparent transparent #a8b2b7 transparent;
+    }
+
+    .language__list {
+      background-color: #fff;
+    }
+
+    .language__item {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 3px;
+    transition: background .3s ease-in-out;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    order: 2;
+    padding: 10px;
+    font-size: 12px;
+    color: rgb(61, 46, 79);
+    text-transform: uppercase;
+    transition: opacity .3s ease-in-out, visibility .3s ease-in-out, color .3s ease-in-out;
+    @include AvenirLTStd-Heavy();
+
+    &.active {
+      order: 1;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    i {
+      display: block;
+      width: 16px;
+      margin-right: 10px;
+
+      svg {
+        display: block;
+        width: 100%;
+      }
+    }
+  }
+}
+@media (min-width: $phone-landscape) {
+  .language {
+
+  }
+}
+@media (min-width: $tablet-portrait) {
+  .language {
+
+  }
+}
+@media (min-width: $tablet-landscape) {
+  .language {
+    top: 5px;
+    transform: none;
+    right: 49px;
+
+    &__item {
+
+
+      &:hover {
+        color: #ff4d00;
+      }
+
+      &.active:hover { color: inherit }
+    }
+  }
+}
+@media (min-width: $desktop) {
+  .language {
+
+  }
+}
+

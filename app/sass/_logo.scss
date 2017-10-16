@@ -1,0 +1,33 @@
+.logo {
+  @include absoluteCenter();
+
+  img {
+    display: block;
+    transition: transform .3s ease-in-out;
+    transform: matrix(.5,0,0,.5,0,0);
+  }
+}
+@media (min-width: $phone-landscape) {
+  .logo {
+
+  }
+}
+@media (min-width: $tablet-portrait) {
+  .logo {
+
+  }
+}
+@media (min-width: $tablet-landscape) {
+  .logo {
+
+    img {
+      transform: matrix(1,0,0,1,0,0);
+    }
+  }
+}
+@media (min-width: $desktop) {
+  .logo {
+
+  }
+}
+

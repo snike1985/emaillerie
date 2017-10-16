@@ -1,0 +1,85 @@
+.agencies {
+  text-align: center;
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+    line-height: 1.375;
+    @include AvenirLTStd-Light();
+  }
+
+  &__logo {
+    display: block;
+    margin-bottom: 10px;
+
+    img {
+      display: block;
+      height: 80px;
+      margin: 0;
+    }
+  }
+
+  &__title {
+    display: block;
+    text-transform: uppercase;
+    @include AvenirLTStd-Heavy();
+  }
+
+  &__mail {
+    display: block;
+    color: #ff4d00;
+    border-bottom: 1px solid transparent;
+    transition: border .3s ease-in-out;
+
+    &:hover {
+      border-color: #ff4d00;
+    }
+  }
+
+  &__phone {
+    display: block;
+    color: #fff;
+    border-bottom: 1px solid transparent;
+    transition: border .3s ease-in-out;
+
+    &:hover {
+      border-color: #fff;
+    }
+  }
+}
+@media (min-width: $phone-landscape) {
+  .agencies {
+
+  }
+}
+@media (min-width: $tablet-portrait) {
+  .agencies {
+
+  }
+}
+@media (min-width: $tablet-landscape) {
+  .agencies {
+    display: flex;
+    padding: 0 0 0 25px;
+    text-align: left;
+
+    &__item {
+      align-items: flex-start;
+      margin-right: 112px;
+    }
+
+    &__logo {
+      margin-bottom: 28px;
+    }
+  }
+}
+@media (min-width: $desktop) {
+  .agencies {
+
+  }
+}
+

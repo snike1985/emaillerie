@@ -1,6 +1,133 @@
 .site {
-  @include justify;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 100vh;
+  min-width: 320px;
+  padding: 15px 15px 0;
+  background-color: #ededed;
+  @include AvenirLTStd-Medium();
 
+  &__header {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    left: 15px;
+    padding: 30px 15px;
+
+    &-layout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: rgba(255,78,0,.7);
+      transform: translateX(-100%);
+      transition: all .3s ease-in-out;
+    }
+
+    &.active {
+
+      .site__header-layout {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0);
+      }
+
+      .menu-btn {
+
+        span {
+          background: transparent;
+          box-shadow: 0 2px 6px rgba(0,0,0, 0);
+
+          &:before {
+            top: calc(50% - 1px);
+            transform: rotate(45deg);
+          }
+          &:after {
+            bottom: calc(50% - 1px);
+            transform: rotate(-45deg);
+          }
+
+          &:before,
+          &:after {
+            background: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0, 0);
+            transition-delay: .001s, .3s;
+          }
+        }
+      }
+    }
+  }
+
+  &__content {
+    background-color: #fff;
+  }
+
+  &__footer {
+    margin: 0 -15px;
+    padding: 30px 15px;
+    background: #19171e;
+    color: rgb(255, 255, 255);
+
+    &-layout {
+      color: rgb(255, 255, 255);
+      @include AvenirLTStd-Light();
+    }
+
+    &-title {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 24px;
+      color: rgb(255, 255, 255);
+    }
+
+    &-column {
+      margin-bottom: 20px;
+      text-align: center;
+
+      .link {
+        font-size: 18px;
+        letter-spacing: 0px;
+        text-transform: none;
+        color: rgb(255, 255, 255);
+        line-height: 1.222;
+        border-bottom-width: 2px;
+        @include AvenirLTStd-Roman();
+      }
+    }
+
+    &-bottom {
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.714;
+      @include AvenirLTStd-Roman();
+
+      > div {
+
+        span {
+          color: #ff4d00;
+        }
+
+        a,
+        a:visited {
+          color: #ff4d00;
+          border-bottom: 1px solid transparent;
+          transition: color .3s ease-in-out, border .3s ease-in-out;
+
+          &:hover {
+            color: #fff;
+            border-color: #fff;
+          }
+        }
+      }
+    }
+  }
 }
 @media (min-width: $phone-landscape) {
   .site {
@@ -14,7 +141,63 @@
 }
 @media (min-width: $tablet-landscape) {
   .site {
+    padding: 55px 55px 0;
 
+    &__header {
+      top: 55px;
+      right: 55px;
+      left: 55px;
+      padding: 0 60px;
+
+      &-layout {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        height: 134px;
+        text-align: center;
+        position: relative;
+        background-color: transparent;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        transition: none;
+      }
+    }
+
+    &__content {
+
+    }
+
+    &__footer {
+      margin: 0 -55px;
+      padding: 80px 55px 33px;
+
+      &-layout {
+        display: flex;
+        margin-bottom: 72px;
+      }
+
+      &-logo {
+        display: inline-block;
+        margin-bottom: 27px;
+      }
+
+      &-title {
+        margin-bottom: 19px;
+      }
+
+      &-column {
+        width: 50%;
+        text-align: left;
+      }
+
+      &-bottom {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        text-align: left;
+      }
+    }
   }
 }
 @media (min-width: $desktop) {

@@ -1,0 +1,87 @@
+.menu {
+
+  &__item {
+    display: block;
+    font-size: 16px;
+    line-height: 2;
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    @include AvenirLTStd-Heavy();
+  }
+}
+.menu-btn {
+  display: flex;
+  align-items: center;
+  @include absoluteCenterY();
+  left: 15px;
+  width: 28px;
+  height: 18px;
+  z-index: 2;
+  cursor: pointer;
+
+  span {
+    height: 2px;
+    width: 100%;
+    background: #ff4e00;
+    font-size: 0;
+    transition: background .3s;
+    backface-visibility: hidden;
+
+    &:before,
+    &:after {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #ff4e00;
+      content: '';
+      transition-duration: .3s, .3s;
+      transition-delay: .3s, .001s;
+      backface-visibility: hidden;
+    }
+    &:before {
+      top: 0;
+      transition-property: top, transform, background;
+    }
+    &:after {
+      bottom: 0;
+      transition-property: bottom, transform, background;
+    }
+  }
+}
+
+@media (min-width: $phone-landscape) {
+  .menu {
+
+  }
+}
+@media (min-width: $tablet-portrait) {
+  .menu {
+
+  }
+}
+@media (min-width: $tablet-landscape) {
+  .menu {
+    display: flex;
+    align-items: baseline;
+    @include AvenirLTStd-Heavy();
+
+    &__item {
+      margin-right: 40px;
+      font-size: 12px;
+      letter-spacing: .7px;
+      color: rgb(61, 46, 79);
+      transition: color .3s ease-in-out;
+
+      &:hover {
+        color: #ff4e00;
+      }
+    }
+  }
+  .menu-btn { display: none }
+}
+@media (min-width: $desktop) {
+  .menu {
+
+  }
+}
