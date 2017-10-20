@@ -80,6 +80,7 @@
                 } );
                 _btnShow.on( {
                     click: function(){
+
                         _show( $( this ).attr( 'data-popup' ) );
                         return false;
                     }

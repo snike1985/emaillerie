@@ -1,0 +1,51 @@
+.architecture {
+  position: relative;
+  display: inline-block;
+
+  img {
+    display: block;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  &__item {
+    position: absolute;
+    width: 60%;
+
+    img {
+      display: block;
+      box-shadow: 0 15px 30px rgba(0,0,0,.15), 0 -30px 30px rgba(0,0,0,.05);
+    }
+
+    &:nth-child(odd) {
+      bottom: 5%;
+      left: -29.5%;
+    }
+
+    &:nth-child(even) {
+      top: 5%;
+      right: -29.5%;
+    }
+  }
+}
+@media (min-width: $phone-landscape) {
+  .architecture {
+
+  }
+}
+@media (min-width: $tablet-portrait) {
+  .architecture {
+
+  }
+}
+@media (min-width: $tablet-landscape) {
+  .architecture {
+
+  }
+}
+@media (min-width: $desktop) {
+  .architecture {
+
+  }
+}
+

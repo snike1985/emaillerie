@@ -29,6 +29,7 @@
 
     .language__list {
       background-color: #fff;
+      pointer-events: fill;
     }
 
     .language__item {
@@ -46,6 +47,7 @@
     width: 100%;
     border-radius: 3px;
     transition: background .3s ease-in-out;
+    pointer-events: none;
   }
 
   &__item {
@@ -65,6 +67,7 @@
       order: 1;
       opacity: 1;
       visibility: visible;
+      pointer-events: fill;
     }
 
     i {
@@ -91,12 +94,13 @@
 }
 @media (min-width: $tablet-landscape) {
   .language {
-    top: 5px;
+    top: 0;
     transform: none;
     right: 49px;
+    height: 44px;
 
     &__item {
-
+      padding: 14px 10px;
 
       &:hover {
         color: #ff4d00;

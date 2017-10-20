@@ -12,8 +12,22 @@
 }
 
 @font-face {
+  font-family: "AvenirLTStd-Book";
+  src: url("../fonts/AvenirLTStd-Book.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: "AvenirLTStd-Light";
   src: url("../fonts/AvenirLTStd-Light.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AvenirLTStd-LightOblique";
+  src: url("../fonts/AvenirLTStd-LightOblique.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }

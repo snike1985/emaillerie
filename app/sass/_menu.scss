@@ -62,6 +62,11 @@
 }
 @media (min-width: $tablet-landscape) {
   .menu {
+
+  }
+}
+@media (min-width: $desktop) {
+  .menu {
     display: flex;
     align-items: baseline;
     @include AvenirLTStd-Heavy();
@@ -69,7 +74,7 @@
     &__item {
       margin-right: 40px;
       font-size: 12px;
-      letter-spacing: .7px;
+      letter-spacing: 1px;
       color: rgb(61, 46, 79);
       transition: color .3s ease-in-out;
 
@@ -79,9 +84,4 @@
     }
   }
   .menu-btn { display: none }
-}
-@media (min-width: $desktop) {
-  .menu {
-
-  }
 }

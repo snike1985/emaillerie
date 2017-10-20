@@ -23,6 +23,11 @@
 }
 @media (min-width: $tablet-landscape) {
   .navigation {
+
+  }
+}
+@media (min-width: $desktop) {
+  .navigation {
     display: flex;
     align-items: center;
 
@@ -70,11 +75,6 @@
         color: #ff4e00;
       }
     }
-  }
-}
-@media (min-width: $desktop) {
-  .navigation {
-
   }
 }
 

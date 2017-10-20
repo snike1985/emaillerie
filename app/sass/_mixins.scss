@@ -10,8 +10,20 @@
   font-style: normal;
 }
 
+@mixin AvenirLTStd-Book() {
+  font-family: "AvenirLTStd-Book", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 @mixin AvenirLTStd-Light() {
   font-family: "AvenirLTStd-Light", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@mixin AvenirLTStd-LightOblique() {
+  font-family: "AvenirLTStd-LightOblique", sans-serif;
   font-weight: 400;
   font-style: normal;
 }

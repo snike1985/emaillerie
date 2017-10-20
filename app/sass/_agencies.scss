@@ -29,6 +29,16 @@
     @include AvenirLTStd-Heavy();
   }
 
+  &__address {
+    display: block;
+    margin-bottom: 29px;
+    font-style: normal;
+    font-size: 18px;
+    color: rgb(61, 46, 79);
+    line-height: 1.222;
+    @include AvenirLTStd-Medium();
+  }
+
   &__mail {
     display: block;
     color: #ff4d00;
@@ -69,7 +79,7 @@
 
     &__item {
       align-items: flex-start;
-      margin-right: 112px;
+      margin-right: 50px;
     }
 
     &__logo {
@@ -80,6 +90,9 @@
 @media (min-width: $desktop) {
   .agencies {
 
+    &__item {
+      margin-right: 112px;
+    }
   }
 }
 

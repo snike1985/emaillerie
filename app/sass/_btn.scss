@@ -9,6 +9,7 @@
   border: 2px solid #ff4e00;
   @include AvenirLTStd-Heavy();
   box-shadow: 0 18px 30px rgba(255,78,0,.06);
+  background-color: rgb(255,255,255);
 
   &.active {
     color: #fff;
@@ -28,7 +29,8 @@
 }
 @media (min-width: $tablet-landscape) {
   .btn {
-    padding: 16px 37px;
+    padding: 22px 37px 19px;
+    letter-spacing: 1.3px;
     transition: color .3s ease-in-out, background .3s ease-in-out;
 
     &:hover {
