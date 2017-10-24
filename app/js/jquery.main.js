@@ -3,6 +3,10 @@
 
     $(function(){
 
+        $('.appartment').each( function() {
+            new Appartment( $(this) );
+        } );
+
         $('.callback').each( function() {
             new Callback( $(this) );
         } );
@@ -25,6 +29,10 @@
 
         $('.site').each( function() {
             new Site( $(this) );
+        } );
+
+        $('.steps').each( function() {
+            new Steps( $(this) );
         } );
 
         $('.show').each( function() {
@@ -147,8 +155,7 @@
         //private properties
         var _obj = obj,
             _btn = _obj.find( '.menu-btn' ),
-            _menu = _obj.find( '.menu' ),
-            _item = _menu.find( '.menu__item' ),
+            _item = _obj.find( '.menu__item, .navigation__item' ),
             _wrap = _obj.find( '.site__header-layout' ),
             _scrollConteiner = $( 'html' );
 
@@ -168,7 +175,7 @@
 
                 _item.on({
                     'click': function() {
-
+                        _hideMenu();
                     }
                 });
 
@@ -288,7 +295,9 @@
             _infoWindow = null,
             _defaultIcon = 'img/location/location_marker.png',
             _logoMarker = 'img/logo.png',
-            _curMarkerIcon = _defaultIcon;
+            _curMarkerIcon = _defaultIcon,
+            _markerData = {},
+            _request = new XMLHttpRequest();
 
         //private methods
         var _addEvents = function() {
@@ -302,29 +311,35 @@
 
                 _items.on({
                     'click': function() {
-                        var curElem = $(this),
-                        filterType = curElem.data('type').split(','),
-                        curMarkerIcon = curElem.data('marker');
+
+                        var curElem = $(this);
+
+                        _markerData = curElem.data('marker');
 
                         if ( !curElem.hasClass('active') ) {
                             _items.removeClass('active');
                             curElem.addClass('active');
 
-                            if ( curMarkerIcon ) {
-                                _curMarkerIcon = curMarkerIcon;
-                            } else {
-                                _curMarkerIcon = _defaultIcon;
-                            }
+                            _clearMarkers();
 
-                            var service;
-                            var request = {
-                                location: _mapCenter,
-                                radius: _searchRadius,
-                                types: filterType
-                            };
+                            _markerData.forEach(function (item) {
+                                var filterType = item['type'],
+                                    service,
+                                    request = {
+                                        location: _mapCenter,
+                                        radius: _searchRadius,
+                                        types: [filterType]
+                                    };
 
-                            service = new google.maps.places.PlacesService(_map);
-                            service.nearbySearch(request, _placeServiceCallback);
+                                if ( item['icon'] ) {
+                                    _curMarkerIcon = item['icon'];
+                                } else {
+                                    _curMarkerIcon = _defaultIcon;
+                                }
+
+                                service = new google.maps.places.PlacesService(_map);
+                                service.nearbySearch(request, _placeServiceCallback);
+                            });
                         }
                     }
                 });
@@ -402,12 +417,12 @@
                 });
             },
             _createMarker = function (place) {
-
+            
                 var image = new google.maps.MarkerImage(
                     _curMarkerIcon,
-                    new google.maps.Size(36,47),
+                    new google.maps.Size(38,49),
                     new google.maps.Point(0,0),
-                    new google.maps.Point(18,47)
+                    new google.maps.Point(19,49)
                 );
                 
                 var curMarker = new google.maps.Marker({
@@ -416,16 +431,52 @@
                     position: place.geometry.location
                 });
                 curMarker.setMap(_map);
-                
+
                 _visibleMarkers.push(curMarker);
-                
+
+                var directionsDisplay;
+                var directionsService;
+                var stepDisplay;
+
+                // Instantiate a directions service.
+                directionsService = new google.maps.DirectionsService();
+                directionsDisplay = new google.maps.DirectionsRenderer(_map)
+
+                var request = {
+                    origin: place.geometry.location,
+                    destination: 'Kiev',
+                    travelMode: 'TRANSIT',
+                    transitOptions: {
+                        modes: ['BUS']
+                    },
+                    // unitSystem: google.maps.UnitSystem.IMPERIAL
+                    // origin: 'Hoboken NJ',
+                    // destination: 'Carroll Gardens, Brooklyn',
+                    // travelMode: 'TRANSIT',
+                    // transitOptions: {
+                    //     departureTime: new Date(1337675679473),
+                    //     modes: ['BUS'],
+                    //     routingPreference: 'FEWER_TRANSFERS'
+                    // },
+                    // unitSystem: google.maps.UnitSystem.IMPERIAL
+                };
+
+                directionsService.route(request, function(response, status) {
+                    if (status == "OK") {
+                        console.log(response);
+                    } else {
+                        console.log(status);
+                    }
+                });
+
                 google.maps.event.addListener(curMarker, 'click', function() {
+                    // console.log(curMarker);
                     _infoWindow.setContent(place.name);
                     _infoWindow.open(_map, this);
+                    curMarker.setIcon("img/location/location_store-hover.png");
                 });
             },
             _placeServiceCallback = function (results, status) {
-                _clearMarkers();
 
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
 
@@ -519,6 +570,225 @@
                         }
                     } );
                 } );
+
+            },
+            _init = function() {
+                _obj[ 0 ].obj = _self;
+                _addEvents();
+            };
+
+        //public properties
+
+        //public methods
+
+        _init();
+    };
+
+    var Steps = function(obj) {
+
+        //private properties
+        var _self = this,
+            _obj = obj,
+            _item = _obj.find('.steps__item'),
+            _window = $( window ),
+            _storey = document.getElementById('storey'),
+            _ctxStorey = _storey.getContext('2d'),
+            _ctxStorey1 = _storey.getContext('2d'),
+            _ctxStorey2 = _storey.getContext('2d'),
+            _ctxStorey3 = _storey.getContext('2d'),
+            _ctxStorey4 = _storey.getContext('2d'),
+            _build = document.getElementById('build'),
+            _ctxBuild = _build.getContext('2d'),
+            _imgBuild = new Image(),
+            _mouseX = 0,
+            _mouseY = 0,
+            _activeStorey = 0;
+
+        _storey.width = 1811;
+        _storey.height = 700;
+
+        //private methods
+        var _addEvents = function() {
+
+                _window.on( {
+                    'load': function() {
+                        _dawBuild();
+                    }
+                } );
+
+                _item.on( {
+                    'mousemove': function(e) {
+                        var koef = 1811/$(this).width(),
+                        elemTop = $(this).offset().top,
+                        elemLeft = $(this).offset().left;
+
+                        _mouseX = (e.pageX - elemLeft)*koef;
+                        _mouseY = (e.pageY - elemTop)*koef;
+                    }
+                } );
+
+                _storey.addEventListener('mousemove',_updateCanvas,false);
+                _storey.addEventListener('click',_openStorey,false);
+
+            },
+            _drawCanvas = function () {
+
+                $('.storey__item').each(function (y) {
+                    var curElem = $(this),
+                        path = curElem.data('path');
+
+                    _ctxStorey.beginPath();
+                    _ctxStorey.moveTo(path[0][0],path[0][1]);
+                    for (var i = 1; i < path.length; i++) {
+                        _ctxStorey.lineTo(path[i][0],path[i][1]);
+                    }
+                    _ctxStorey.globalAlpha = 0;
+                    if (_ctxStorey.isPointInPath(_mouseX, _mouseY)) {
+                        TweenMax.to(_ctxStorey, 1 ,{
+                            globalAlpha: 1
+                        });
+                        _ctxStorey.globalAlpha = 1;
+                        _activeStorey = y + 1;
+                    }
+                    _ctxStorey.fillStyle = 'rgba(255,78,0,.4)';
+                    _ctxStorey.fill();
+                    _ctxStorey.closePath();
+                    _ctxStorey.restore();
+                });
+            },
+            _updateCanvas = function () {
+                _ctxStorey.clearRect(0,0,_storey.width,_storey.height);
+                _activeStorey = null;
+                _drawCanvas();
+            },
+            _openStorey = function () {
+
+                if (_activeStorey) {
+                    console.log('Storey ', _activeStorey);
+                    console.log($('.steps__storey').length);
+                    $('.steps__storey').removeClass('active');
+                    $('.steps__storey').eq(_activeStorey - 1).addClass('active');
+                }
+            },
+            _dawBuild = function() {
+
+                _imgBuild.src = 'img/step-build.jpg';
+
+                _imgBuild.onload = function() {
+                    _ctxBuild.canvas.width = _imgBuild.width;
+                    _ctxBuild.canvas.height = _imgBuild.height;
+                    _ctxBuild.drawImage(_imgBuild,0,0);
+
+                    // _drawStorey();
+                }
+
+            },
+            _init = function() {
+                _obj[ 0 ].obj = _self;
+                _addEvents();
+            };
+
+        //public properties
+
+        //public methods
+
+        _init();
+    };
+
+    var Appartment = function(obj) {
+
+        //private properties
+        var _self = this,
+            _obj = obj,
+            _item = _obj.find('.appartment__item'),
+            _window = $( window ),
+            _storey = document.getElementById('storey1'),
+            _ctxStorey = _storey.getContext('2d'),
+            _build = document.getElementById('appartment'),
+            _ctxBuild = _build.getContext('2d'),
+            _imgBuild = new Image(),
+            _mouseX = 0,
+            _mouseY = 0,
+            _activeStorey = 0;
+
+        _storey.width = 1811;
+        _storey.height = 700;
+
+        //private methods
+        var _addEvents = function() {
+
+                _window.on( {
+                    'load': function() {
+                        _dawBuild();
+                    }
+                } );
+
+                _obj.on( {
+                    'mousemove': function(e) {
+
+
+                    }
+                } );
+
+                _storey.addEventListener('mousemove',function (e) {
+                    var koef = 1811/$(this).width(),
+                        elemTop = $(this).offset().top,
+                        elemLeft = $(this).offset().left;
+
+                    _mouseX = (e.pageX - elemLeft)*koef;
+                    _mouseY = (e.pageY - elemTop)*koef;
+
+                    console.log(_mouseX, _mouseY);
+
+                    _updateCanvas();
+                },false);
+                _storey.addEventListener('click',_openStorey,false);
+
+            },
+            _drawCanvas = function () {
+
+                _item.each(function (y) {
+                    var curElem = $(this),
+                        path = curElem.data('path');
+
+                    _ctxStorey.beginPath();
+                    _ctxStorey.moveTo(path[0][0],path[0][1]);
+                    for (var i = 1; i < path.length; i++) {
+                        _ctxStorey.lineTo(path[i][0],path[i][1]);
+                    }
+                    _ctxStorey.globalAlpha = 0;
+                    if (_ctxStorey.isPointInPath(_mouseX, _mouseY)) {
+                        // TweenMax.to(_ctxStorey, 1 ,{
+                        //     globalAlpha: 1
+                        // });
+                        _ctxStorey.globalAlpha = 1;
+                        _activeStorey = y + 1;
+                    }
+                    _ctxStorey.fillStyle = 'rgba(255,78,0,.4)';
+                    _ctxStorey.fill();
+                    _ctxStorey.closePath();
+                    _ctxStorey.restore();
+                });
+            },
+            _updateCanvas = function () {
+                _ctxStorey.clearRect(0,0,_storey.width,_storey.height);
+                _activeStorey = null;
+                _drawCanvas();
+            },
+            _openStorey = function () {
+
+            },
+            _dawBuild = function() {
+
+                _imgBuild.src = 'img/storeys/storey1.jpg';
+
+                _imgBuild.onload = function() {
+                    _ctxBuild.canvas.width = _imgBuild.width;
+                    _ctxBuild.canvas.height = _imgBuild.height;
+                    _ctxBuild.drawImage(_imgBuild,0,0);
+
+                    // _drawStorey();
+                }
 
             },
             _init = function() {

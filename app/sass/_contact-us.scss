@@ -1,0 +1,109 @@
+.contact-us {
+
+  &__field {
+    width: 100%;
+  }
+
+  &__double {
+
+  }
+
+  &__message {
+
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    height: 40px;
+    padding: 0 10px;
+    margin-bottom: 15px;
+    background: #fff;
+    border: 2px solid #e7e6e8;
+    font-size: 10px;
+    letter-spacing: 1.4px;
+    color: rgb(61, 46, 79);
+    caret-color: #ff4d00;
+    text-transform: uppercase;
+    transition: border .3s ease-in-out;
+    @include AvenirLTStd-Heavy();
+
+    &:focus { border-color: #ff4d00 }
+
+    &::-webkit-input-placeholder { color: rgba(61, 46, 79, 0.502) }
+    &::-moz-placeholder { color: rgba(61, 46, 79, 0.502) }
+    &:-ms-input-placeholder { color: rgba(61, 46, 79, 0.502) }
+    &:-moz-placeholder { color: rgba(61, 46, 79, 0.502) }
+  }
+
+  textarea {
+    height: 100px;
+    padding: 10px;
+  }
+
+  button[type=submit] {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+}
+@media (min-width: $phone-landscape) {
+  .contact-us {
+
+  }
+}
+@media (min-width: $tablet-portrait) {
+  .contact-us {
+    max-width: 1500px;
+    margin: 0 auto;
+
+    &__double {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      .contact-us__field {
+        width: calc(50% - 25px);
+      }
+    }
+
+    &__message {
+      padding: 30px 0 ;
+    }
+
+    input,
+    textarea {
+      height: 59px;
+      padding: 0 20px;
+      margin-bottom: 20px;
+      font-size: 12px;
+    }
+
+    textarea {
+      height: 138px;
+      padding: 22px 20px;
+    }
+  }
+}
+@media (min-width: $tablet-landscape) {
+  .contact-us {
+
+  }
+}
+@media (min-width: $desktop) {
+  .contact-us {
+
+    &__inline {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      > .contact-us__double {
+        width: calc(81% - 25px);
+      }
+
+      > .contact-us__once {
+        width: calc(19% - 25px);
+      }
+    }
+  }
+}
