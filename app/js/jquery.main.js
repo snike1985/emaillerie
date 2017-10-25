@@ -1060,7 +1060,11 @@
                 _back.removeClass('hide');
             },
             _openAppartment = function () {
-                _floors.eq(_activeFloor).find('.plan__appartment').eq(_activeAppartment).addClass('active');
+            var openingElem = _floors.eq(_activeFloor).find('.plan__appartment').eq(_activeAppartment);
+
+                _createBackground(openingElem);
+                openingElem.addClass('active');
+
                 console.log('open appartament C' + _activeFloor + '.' + (_activeAppartment + 1 ));
                 _mouseX = 0;
                 _mouseY = 0;
@@ -1073,7 +1077,7 @@
 
                 _createBackground(_build);
                 _createBackground(_floors);
-                _createBackground(_appartments);
+                // _createBackground(_appartments);
 
                 _createFloorCanvas();
                 _createBuildFloorCanvas();
