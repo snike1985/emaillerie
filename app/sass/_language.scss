@@ -95,6 +95,10 @@
 }
 @media (min-width: $tablet-landscape) {
   .language {
+  }
+}
+@media (min-width: $desktop) {
+  .language {
     top: 0;
     transform: none;
     right: 49px;
@@ -109,11 +113,6 @@
 
       &.active:hover { color: inherit }
     }
-  }
-}
-@media (min-width: $desktop) {
-  .language {
-
   }
 }
 

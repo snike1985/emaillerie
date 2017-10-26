@@ -33,7 +33,13 @@
 }
 @media (min-width: $tablet-landscape) {
   .hero {
-    height: 1001px;
+
+  }
+}
+@media (min-width: $desktop) {
+  .hero {
+    height: calc(100vh - 55px);
+    max-height: 1001px;
 
     &__content {
       font-size: 48px;
@@ -45,11 +51,6 @@
         margin-bottom: 16px;
       }
     }
-  }
-}
-@media (min-width: $desktop) {
-  .hero {
-
   }
 }
 
