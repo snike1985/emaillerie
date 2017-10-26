@@ -223,22 +223,25 @@
         //private properties
         var _obj = obj,
             _list = _obj.find( '.language__list' ),
-            _items = _list.find( '.language__item' ),
-            _currentElem = _obj.find( '.language__current' );
+            _items = _list.find( '.language__item' );
 
         //private methods
         var _addEvents = function() {
 
-                _obj.on({
+                $(window).on({
                     'click': function() {
 
-
+                        if ( _obj.hasClass( 'open' ) ) {
+                            _hideList();
+                        }
                     }
                 });
 
                 _items.on({
-                    'click': function() {
+                    'click': function(e) {
                         var curElem = $(this);
+
+                        e.stopPropagation();
 
                         if ( !curElem.hasClass( 'active' ) ) {
                             _changeActiveElem(curElem);
@@ -667,11 +670,14 @@
             _floorCanvas = document.createElement('canvas'),
             _floorCanvasCtx = _floorCanvas.getContext('2d'),
 
+            _tooltips = _wrap.find('.plan__tooltips-floor'),
             _mouseX = 0,
             _mouseY = 0,
             _activeFloor = -1,
             _activeAppartment = -1,
-            _step = 0;
+            _step = 0,
+            _canRender = true,
+            _alpha = 0;
 
         _floorCanvas.classList.add('floor');
 
@@ -699,6 +705,15 @@
                                 break;
                         }
                     },
+                    'mouseenter': function() {
+
+                        // _canRender = true;
+                        // _render();
+                    },
+                    'mouseleave': function() {
+
+                        // _canRender = false;
+                    },
                     'click': function() {
 
                         switch (_step) {
@@ -720,6 +735,7 @@
                     'click': function () {
 
                         _step = _step - 1;
+                        $('.plan__info').removeClass('show');
 
                         switch (_step) {
                             case 0:
@@ -742,6 +758,24 @@
                     }
                 });
             },
+            _render = function (time) {
+            console.log(time);
+                if (_canRender) {
+                    switch (_step) {
+                        case 0:
+                            _updateBuildFloor();
+                            break;
+                        case 1:
+                            _updateFloor();
+                            break;
+                        case 2:
+                            break;
+                        default:
+                            break;
+                    }
+                    window.requestAnimationFrame(_render);
+                }
+            },
             _createBackground = function (elem) {
                 elem.each(function () {
                     var curElem = $(this);
@@ -760,6 +794,24 @@
                 _floorCanvas.width = 1811;
                 _floorCanvas.height = 700;
                 _drawFloor();
+
+                _floors.each(function () {
+                    var curFloor = $(this),
+                        curAppartments = curFloor.find('.plan__appartment'),
+                        curIndex = curFloor.index() - 1,
+                        curTooltip = _tooltips.eq(curIndex);
+
+                    curAppartments.each(function (i) {
+                        var elem = $(this);
+
+                        console.log(curTooltip.find('.plan__info').eq(i));
+                        // console.log(elem.data('path')[0][0], elem.data('path')[0][1]);
+                        curTooltip.find('.plan__info').eq(i).css({
+                            'left': elem.data('path')[1][0]/1811*100 + '%',
+                            'top': elem.data('path')[1][1]/700*100 + '%'
+                        });
+                    });
+                });
             },
             _drawBuildFloor = function () {
 
@@ -778,6 +830,8 @@
                         _buildFloorCanvasCtx.globalAlpha = 1;
                         _obj.addClass('pointer');
                         _activeFloor = y;
+                    } else {
+
                     }
                     _buildFloorCanvasCtx.fillStyle = 'rgba(255,78,0,.4)';
                     _buildFloorCanvasCtx.fill();
@@ -793,6 +847,7 @@
             _drawFloor = function () {
 
                 _obj.removeClass('pointer');
+                $('.plan__info').removeClass('show');
                 _floors.eq(_activeFloor).find('.plan__appartment').each(function (y) {
                     var curElem = $(this),
                         path = curElem.data('path');
@@ -807,6 +862,11 @@
                         _floorCanvasCtx.globalAlpha = 1;
                         _activeAppartment = y;
                         _obj.addClass('pointer');
+
+                        if (!_wrap.find('.plan__tooltips-floor').eq(_activeFloor).find('.plan__info').eq(y).hasClass('show')) {
+                            $('.plan__info').removeClass('show');
+                            _wrap.find('.plan__tooltips-floor').eq(_activeFloor).find('.plan__info').eq(y).addClass('show');
+                        }
                     }
                     _floorCanvasCtx.fillStyle = 'rgba(255,78,0,.4)';
                     _floorCanvasCtx.fill();
@@ -848,7 +908,6 @@
 
                 _createBackground(_build);
                 _createBackground(_floors);
-                // _createBackground(_appartments);
 
                 _createFloorCanvas();
                 _createBuildFloorCanvas();
