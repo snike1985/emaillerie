@@ -44,6 +44,12 @@
       color: transparent;
       white-space: nowrap;
 
+      &.active {
+        color: transparent;
+
+        i svg { fill: rgb(61, 46, 79) }
+      }
+
       i {
         display: block;
         width: 16px;
@@ -92,6 +98,12 @@
         margin-left: 0;
 
         &:before { display: none }
+      }
+
+      &.active {
+        color: #ff4e00;
+
+        i svg { fill: #ff4e00 }
       }
 
       &:hover {
