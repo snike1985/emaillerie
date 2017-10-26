@@ -9,10 +9,6 @@
     @include AvenirLTStd-Heavy();
 
     i { display: none; }
-
-    &.active {
-      color: #ff4e00;
-    }
   }
 }
 @media (min-width: $phone-landscape) {
