@@ -195,10 +195,6 @@
       line-height: 3.067;
     }
 
-    &__content {
-      padding-top: 100px;
-    }
-
     &__footer {
       margin: 0 -55px;
       padding: 80px 55px 33px;
@@ -266,6 +262,10 @@
         visibility: visible;
         transition: none;
       }
+    }
+
+    &__content {
+      padding-top: 100px;
     }
 
     &__footer {

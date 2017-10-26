@@ -35,15 +35,14 @@
       position: relative;
       overflow: hidden;
       width: 16px;
-      height: 30px;
+      height: 21px;
       margin-left: 30px;
       color: transparent;
       white-space: nowrap;
 
       &.active {
         color: transparent;
-
-        i svg { fill: rgb(61, 46, 79) }
+        cursor: default;
       }
 
       i {
@@ -98,8 +97,6 @@
 
       &.active {
         color: #ff4e00;
-
-        i svg { fill: #ff4e00 }
       }
 
       &:hover {

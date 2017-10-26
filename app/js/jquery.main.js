@@ -244,6 +244,12 @@
                         e.stopPropagation();
 
                         if ( !curElem.hasClass( 'active' ) ) {
+
+                            var selectedLang = curElem.data('href'),
+                                orignLocation = window.location.origin;
+
+                            window.location = orignLocation + selectedLang;
+
                             _changeActiveElem(curElem);
                         } else {
                             if ( _obj.hasClass( 'open' ) ) {
@@ -292,8 +298,8 @@
             _mapCenter = {lat: _locationCenter[0], lng: _locationCenter[1]},
             _visibleMarkers = [],
             _infoWindow = null,
-            _defaultIcon = 'img/location/location_marker.png',
-            _logoMarker = 'img/logo.png',
+            _defaultIcon = '../img/location/location_marker.png',
+            _logoMarker = '../img/logo.png',
             _curMarkerIcon = _defaultIcon,
             _markerData = {},
             _request = new XMLHttpRequest();
@@ -813,11 +819,9 @@
                     curAppartments.each(function (i) {
                         var elem = $(this);
 
-                        console.log(curTooltip.find('.plan__info').eq(i));
-                        // console.log(elem.data('path')[0][0], elem.data('path')[0][1]);
                         curTooltip.find('.plan__info').eq(i).css({
-                            'left': elem.data('path')[1][0]/1811*100 + '%',
-                            'top': elem.data('path')[1][1]/700*100 + '%'
+                            'left': elem.data('tooltip')[0]/1811*100 + '%',
+                            'bottom': (700 - elem.data('tooltip')[1])/700*100 + '%'
                         });
                     });
                 });

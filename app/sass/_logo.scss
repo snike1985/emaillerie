@@ -29,8 +29,9 @@
 }
 @media (min-width: $desktop) {
   .logo {
-    left: 50px;
+    left: 55px;
     transform: translate(0,-50%);
+    z-index: 1;
   }
 }
 @media (min-width: $desktop-hd) {
