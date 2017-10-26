@@ -534,6 +534,14 @@
                     _canMove = true;
                 }
             },
+            _checkPlatform = function() {
+                var platform = window.navigator.platform;
+
+                if ( platform == 'Mac68K' || platform == 'MacPPC' || platform == 'MacIntel') {
+                    $('.language__item span').css({ 'padding-top': '3px' });
+                    $('.navigation__item i').css({ 'margin-top': '-4px' });
+                }
+            },
             _paralax = function( elem, x, y, koef ) {
                 var translate = 'translate3d(' + Math.round(x*koef) + 'px, ' + Math.round(y*koef) + 'px, 0px )';
 
@@ -574,6 +582,7 @@
             _init = function() {
                 _obj[ 0 ].obj = _self;
                 _addEvents();
+                _checkPlatform();
             };
 
         //public properties
