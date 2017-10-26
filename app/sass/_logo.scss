@@ -27,7 +27,13 @@
 }
 @media (min-width: $desktop) {
   .logo {
-
+    left: 50px;
+    transform: translate(0,-50%);
+  }
+}
+@media (min-width: $desktop-hd) {
+  .logo {
+    @include absoluteCenter();
   }
 }
 

@@ -255,6 +255,41 @@
       &-layout {
         flex-direction: row;
         align-items: center;
+        justify-content: flex-end;
+        height: 134px;
+        text-align: center;
+        position: relative;
+        background-color: transparent;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        transition: none;
+      }
+    }
+
+    &__footer {
+
+      .agencies {
+
+        &__item {
+          margin-right: 112px;
+        }
+      }
+    }
+  }
+}
+@media (min-width: $desktop-hd) {
+  .site {
+
+    &__header {
+      top: 55px;
+      right: 55px;
+      left: 55px;
+      padding: 0 60px;
+
+      &-layout {
+        flex-direction: row;
+        align-items: center;
         justify-content: space-between;
         height: 134px;
         text-align: center;

@@ -127,7 +127,7 @@
     }
 
     .swiper-container {
-      height: 860px;
+      height: calc((100vw - 100px)*.5);
     }
 
     .swiper-slide {
@@ -159,6 +159,16 @@
 }
 @media (min-width: $desktop) {
   .gallery {
+
+  }
+}
+
+@media (min-width: $desktop-hd) {
+  .gallery {
+
+    .swiper-container {
+      height: 860px;
+    }
 
   }
 }
