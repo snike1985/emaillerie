@@ -225,6 +225,11 @@
         border-color: #ffffff transparent transparent transparent;
         content: '';
       }
+
+      &_not-title {
+        &:before,
+        &:after { display: none }
+      }
     }
   }
 }

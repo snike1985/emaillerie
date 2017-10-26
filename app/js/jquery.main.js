@@ -244,12 +244,6 @@
                         e.stopPropagation();
 
                         if ( !curElem.hasClass( 'active' ) ) {
-
-                            var selectedLang = curElem.data('href'),
-                                orignLocation = window.location.origin;
-
-                            window.location = orignLocation + selectedLang;
-
                             _changeActiveElem(curElem);
                         } else {
                             if ( _obj.hasClass( 'open' ) ) {

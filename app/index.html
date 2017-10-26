@@ -11,19 +11,27 @@
 
     <script>
         var curLang = window.navigator.language,
-            orignLocation = window.location.origin;
+            orignLocation = window.location.href,
+            curPathName = window.location.pathname,
+            curPathNameArr = curPathName.split('/');
+
+        if ( !curPathNameArr[curPathNameArr.length - 1] == '' ) {
+            orignLocation = orignLocation.replace(/\/[^\/]+\/?$/, '')
+        }
+        curPathName = curPathName.replace('/index.html', '') + '/';
+
         switch (curLang) {
             case 'fr':
-                window.location = orignLocation + '/fr/';
+                window.location = orignLocation + 'fr';
                 break;
             case 'nl':
-                window.location = orignLocation + '/nl/';
+                window.location = orignLocation + 'nl';
                 break;
             case 'en':
-                window.location = orignLocation + '/en/';
+                window.location = orignLocation + 'en';
                 break;
             default:
-                window.location = orignLocation + '/en/';
+                window.location = orignLocation + 'en';
                 break;
         }
     </script>
