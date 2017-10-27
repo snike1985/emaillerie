@@ -2,9 +2,59 @@
   text-align: center;
   background-color: #fff;
 
+  &.loaded .map__location {
+
+    &:before,
+    &:after { opacity: 0 }
+
+    > div { opacity: 1 }
+  }
+
   &__location {
+    position: relative;
     height: 500px;
     background-color: #cccccc;
+
+    &:before {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 50px;
+      height: 50px;
+      margin: -25px 0 0 -25px;
+      z-index: 1;
+      pointer-events: none;
+      border: 5px solid #ff4d00;
+      border-color: #ff4d00 #ff4d00 transparent transparent;
+      border-radius: 50%;
+      content: '';
+      animation: loading 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite forwards;
+      box-sizing: border-box;
+      transition: opacity .3s ease-in-out;
+    }
+
+    &:after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 30px;
+      height: 30px;
+      margin: -15px 0 0 -15px;
+      z-index: 1;
+      pointer-events: none;
+      border: 3px solid #ff4d00;
+      border-color: transparent transparent #ff4d00 #ff4d00;
+      border-radius: 50%;
+      content: '';
+      animation: loading 1s cubic-bezier(0.4, 0, 0.2, 1) infinite forwards;
+      box-sizing: border-box;
+      transition: opacity .3s ease-in-out;
+    }
+
+    > div {
+      opacity: 0;
+      transition: opacity .3s ease-in-out;
+    }
 
     .customZoomControls {
       margin: 0 20px 15px 0;
@@ -203,3 +253,106 @@
   }
 }
 
+.map__info-window {
+  white-space: nowrap;
+
+  > div {
+    //height: auto !important;
+    padding: 10px 20px 1px;
+    margin-top: 10px;
+    box-shadow: 0 30px 60px rgba(0,0,0,.12);
+    background: #fff;
+    font-size: 13px;
+    color: rgb(61, 46, 79);
+    text-transform: uppercase;
+    line-height: 1.692;
+    @include AvenirLTStd-Heavy();
+    //transition: all .3s ease-in-out;
+    text-align: center;
+    animation: show-window .3s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
+
+    &:after {
+      @include absoluteCenterX();
+      top: 100%;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 6px 7px 0 7px;
+      border-color: #ffffff transparent transparent transparent;
+      content: '';
+    }
+
+    > div {
+
+      &:first-child { display: none }
+      &:last-child { display: none }
+    }
+    .gm-style-iw {
+      position: relative !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: auto !important;
+
+      > div > div {
+        //display: flex;
+        //align-items: center;
+        //
+        //span {
+        //  display: block;
+        //  padding-left: 20px;
+        //}
+      }
+    }
+  }
+
+  &-wrap {
+    display: flex;
+    align-items: center;
+
+    span {
+      display: block;
+      padding-left: 20px;
+    }
+  }
+
+  .stations {
+    padding: 0;
+    min-width: 300px;
+  }
+}
+
+.macOs {
+
+  .map__info-window {
+
+    > div {
+      .gm-style-iw {
+
+        > div > div {
+
+          span {
+            position: relative;
+            top: 3px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@-webkit-keyframes show-window {
+  0% { opacity: 0 }
+  100% { opacity: 1 }
+}
+@keyframes show-window {
+  0% { opacity: 0 }
+  100% { opacity: 1 }
+}
+@-webkit-keyframes loading {
+  0% { -webkit-transform: rotate(0) }
+  100% { -webkit-transform: rotate(360deg) }
+}
+@keyframes loading {
+  0% { transform: rotate(0) }
+  100% { transform: rotate(360deg) }
+}

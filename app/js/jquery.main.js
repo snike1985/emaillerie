@@ -292,14 +292,31 @@
             _mapCenter = {lat: _locationCenter[0], lng: _locationCenter[1]},
             _visibleMarkers = [],
             _infoWindow = null,
-            _defaultIcon = '../img/location/location_marker.png',
             _logoMarker = '../img/logo.png',
-            _curMarkerIcon = _defaultIcon,
             _markerData = {},
-            _request = new XMLHttpRequest();
+            _request = new XMLHttpRequest(),
+            _clickedMarker = null,
+            _clickedMarkerIcon;
 
         //private methods
         var _addEvents = function() {
+
+                $(window).on({
+                    'load': function() {
+                        var iwOuter = $('.gm-style-iw'),
+                            iwBackground = iwOuter.prev(),
+                            wrap = iwOuter.parent(),
+                            parentWrap = wrap.parent();
+
+                        parentWrap.addClass('map__info-window');
+                        iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+                        iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+
+                        _infoWindow.close();
+
+                        _obj.addClass('loaded');
+                    }
+                });
 
                 _obj.on({
                     'click': function() {
@@ -329,12 +346,6 @@
                                         radius: _searchRadius,
                                         types: [filterType]
                                     };
-
-                                if ( item['icon'] ) {
-                                    _curMarkerIcon = item['icon'];
-                                } else {
-                                    _curMarkerIcon = _defaultIcon;
-                                }
 
                                 service = new google.maps.places.PlacesService(_map);
                                 service.nearbySearch(request, _placeServiceCallback);
@@ -372,24 +383,17 @@
                     new google.maps.Point(90,46)
                 );
 
-                // var goldStar = {
-                //     path: 'M 24 4 C 16.269531 4 10 10.269531 10 18 C 10 25.730469 24 44 24 44 C 24 44 38 25.730469 38 18 C 38 10.269531 31.730469 4 24 4 Z M 24 25 C 20.132813 25 17 21.867188 17 18 C 17 14.132813 20.132813 11 24 11 C 27.867188 11 31 14.132813 31 18 C 31 21.867188 27.867188 25 24 25 Z',
-                //     fillColor: '#FF3D00',
-                //     strokeColor: '#F00',
-                //     fillOpacity: 1
-                // };
-
                 var marker = new google.maps.Marker({
                     position: _mapCenter,
-                    icon: _logoMarker,
+                    icon: image,
                     map: _map
                 });
 
                 marker.setMap(_map);
 
-                _infoWindow = new google.maps.InfoWindow({ map: _map });
-
-                _infoWindow.close();
+                _infoWindow = new google.maps.InfoWindow({
+                    map: _map
+                });
             },
             _customZoomControl = function (div, map) {
                 // Get the control DIV. We'll attach our control UI to this DIV.
@@ -416,14 +420,49 @@
                 });
             },
             _createMarker = function (place) {
-            
+                var curIcon;
+
+                place.types.forEach(function (elem) {
+                    switch (elem) {
+                        case 'park':
+                            curIcon = '../img/location/location_park.png';
+                            break;
+                        case 'hospital':
+                            curIcon = '../img/location/location_medical.png';
+                            break;
+                        case 'restaurant':
+                            curIcon = '../img/location/location_restaurant.png';
+                            break;
+                        case 'cafe':
+                            curIcon = '../img/location/location_restaurant.png';
+                            break;
+                        case 'store':
+                            curIcon = '../img/location/location_store.png';
+                            break;
+                        case 'school':
+                            curIcon = '../img/location/location_school.png';
+                            break;
+                        case 'train_station':
+                            curIcon = '../img/location/location_train_station.png';
+                            break;
+                        case 'bus_station':
+                            curIcon = '../img/location/location_bus_station.png';
+                            break;
+                        case 'subway_station':
+                            curIcon = '../img/location/location_metro_station.png';
+                            break;
+                        default:
+                            break;
+                    }
+                });
+
                 var image = new google.maps.MarkerImage(
-                    _curMarkerIcon,
-                    new google.maps.Size(38,49),
+                    curIcon,
+                    new google.maps.Size(37,48),
                     new google.maps.Point(0,0),
-                    new google.maps.Point(19,49)
+                    new google.maps.Point(18,48)
                 );
-                
+
                 var curMarker = new google.maps.Marker({
                     map: _map,
                     icon: image,
@@ -439,7 +478,7 @@
 
                 // Instantiate a directions service.
                 directionsService = new google.maps.DirectionsService();
-                directionsDisplay = new google.maps.DirectionsRenderer(_map)
+                directionsDisplay = new google.maps.DirectionsRenderer(_map);
 
                 var request = {
                     origin: place.geometry.location,
@@ -469,10 +508,97 @@
                 });
 
                 google.maps.event.addListener(curMarker, 'click', function() {
-                    // console.log(curMarker);
-                    _infoWindow.setContent(place.name);
+
+                    var content,
+                        markerHoverIcon,
+                        markerWindowIcon,
+                        transportStation = false;
+                    
+                    place.types.forEach(function (elem) {
+                        switch (elem) {
+                            case 'park':
+                                markerWindowIcon = '../img/location/park.png';
+                                markerHoverIcon = '../img/location/location_park-hover.png';
+                                break;
+                            case 'hospital':
+                                markerWindowIcon = '../img/location/medical.png';
+                                markerHoverIcon = '../img/location/location_medical-hover.png';
+                                break;
+                            case 'restaurant':
+                                markerWindowIcon = '../img/location/restaurant.png';
+                                markerHoverIcon = '../img/location/location_restaurant-hover.png';
+                                break;
+                            case 'cafe':
+                                markerWindowIcon = '../img/location/restaurant.png';
+                                markerHoverIcon = '../img/location/location_restaurant-hover.png';
+                                break;
+                            case 'store':
+                                markerWindowIcon = '../img/location/store.png';
+                                markerHoverIcon = '../img/location/location_store-hover.png';
+                                break;
+                            case 'school':
+                                markerWindowIcon = '../img/location/school.png';
+                                markerHoverIcon = '../img/location/location_school-hover.png';
+                                break;
+                            case 'train_station':
+                                markerWindowIcon = '../img/location/train_station.png';
+                                markerHoverIcon = '../img/location/location_train_station-hover.png';
+                                transportStation = true;
+                                break;
+                            case 'bus_station':
+                                markerWindowIcon = '../img/location/bus_station.png';
+                                markerHoverIcon = '../img/location/location_bus_station-hover.png';
+                                transportStation = true;
+                                break;
+                            case 'subway_station':
+                                markerWindowIcon = '../img/location/metro_station.png';
+                                markerHoverIcon = '../img/location/location_metro_station-hover.png';
+                                transportStation = true;
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+
+                    content = '<div class="map__info-window-wrap"><img src="' + markerWindowIcon + '">' +
+                        '<span class="map__info-window-name">' + place.name + '</span></div>';
+
+                    // if ( transportStation ) {
+                    //     content = '<div class="map__info-window-wrap"><img src="' + markerWindowIcon + '">' +
+                    //         '<span class="map__info-window-name">' + place.name + '</span></div>' +
+                    //         '<div class="stations">' +
+                    //         '<div class="stations__item">' +
+                    //         '<dl>' +
+                    //         '<dt>Lignes:</dt>' +
+                    //         '<dd>' +
+                    //         '<span class="stations__number color7">126</span>' +
+                    //         '<span class="stations__number color8">127</span>' +
+                    //         '<span class="stations__number color9">128</span>' +
+                    //         '<span class="stations__number color10">129</span>' +
+                    //         '<span class="stations__number color11">620</span>' +
+                    //         '</dd>' +
+                    //         '</dl>' +
+                    //         '</div></div>';
+                    // }
+
+                    if ( _clickedMarker ) {
+                        _clickedMarker.setIcon(_clickedMarkerIcon);
+                    }
+
+                    _clickedMarker = curMarker;
+                    _clickedMarkerIcon = curMarker.getIcon();
+
+                    _infoWindow.setContent(content);
+
                     _infoWindow.open(_map, this);
-                    // curMarker.setIcon("img/location/location_store-hover.png");
+                    curMarker.setIcon(markerHoverIcon);
+                });
+
+                google.maps.event.addListener(_map, 'click', function() {
+                    if ( _clickedMarker ) {
+                        _clickedMarker.setIcon(_clickedMarkerIcon);
+                    }
+                    _infoWindow.close();
                 });
             },
             _placeServiceCallback = function (results, status) {
@@ -540,6 +666,7 @@
                 if ( platform == 'Mac68K' || platform == 'MacPPC' || platform == 'MacIntel') {
                     $('.language__item span').css({ 'padding-top': '3px' });
                     $('.navigation__item i').css({ 'margin-top': '-4px' });
+                    $('.site').addClass('macOs');
                 }
             },
             _paralax = function( elem, x, y, koef ) {
@@ -754,6 +881,10 @@
                                 break;
                             case 1:
                                 $('.plan__appartment').removeClass('active');
+                                _wrap.removeClass('big');
+                                setTimeout(function () {
+                                    _build.css({ 'height': 'auto' });
+                                }, 300);
                                 _openFloor();
                                 _updateFloor();
                                 break;
@@ -787,9 +918,15 @@
             },
             _createBackground = function (elem) {
                 elem.each(function () {
-                    var curElem = $(this);
+                    var curElem = $(this),
+                    img = new Image();
 
-                    curElem.css({ 'background-image': 'url(' + curElem.data('img') + '' });
+                    img.src = curElem.data('img');
+
+                    img.onload = function () {
+                        curElem.css({ 'background-image': 'url(' + curElem.data('img') + '' });
+                        _wrap.removeClass('loading');
+                    };
                 });
             },
             _createBuildFloorCanvas = function () {
@@ -899,14 +1036,21 @@
                 if (_activeAppartment || _activeAppartment == 0) {
                     var openingElem = _floors.eq(_activeFloor).find('.plan__appartment').eq(_activeAppartment);
 
+                    _wrap.addClass('loading');
+
                     _createBackground(openingElem);
                     openingElem.addClass('active');
 
-                    console.log('open appartament C' + _activeFloor + '.' + (_activeAppartment + 1 ));
-                    _mouseX = 0;
-                    _mouseY = 0;
-                    _step = 2;
-                    _updateFloor();
+                    _build.css({ 'height': _build.outerHeight() + 'px' });
+
+                    setTimeout(function () {
+                        _wrap.addClass('big');
+                        console.log('open ' + _activeFloor + '.' + (_activeAppartment + 1 ));
+                        _mouseX = 0;
+                        _mouseY = 0;
+                        _step = 2;
+                        _updateFloor();
+                    }, 50)
                 }
             },
             _init = function() {
