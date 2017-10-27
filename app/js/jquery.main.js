@@ -422,6 +422,16 @@
             _createMarker = function (place) {
                 var curIcon;
 
+                // console.log(place['reference']);
+                // var service = new google.maps.places.PlacesService(_map);
+                // service.getDetails({reference:place.reference}, function (place, status)
+                // {
+                //     if (status == google.maps.places.PlacesServiceStatus.OK)
+                //     {
+                //         console.log(place);
+                //     }
+                // });
+
                 place.types.forEach(function (elem) {
                     switch (elem) {
                         case 'park':
@@ -468,51 +478,17 @@
                     icon: image,
                     position: place.geometry.location
                 });
+
                 curMarker.setMap(_map);
 
                 _visibleMarkers.push(curMarker);
 
-                var directionsDisplay;
-                var directionsService;
-                var stepDisplay;
-
-                // Instantiate a directions service.
-                directionsService = new google.maps.DirectionsService();
-                directionsDisplay = new google.maps.DirectionsRenderer(_map);
-
-                var request = {
-                    origin: place.geometry.location,
-                    destination: 'Kiev',
-                    travelMode: 'TRANSIT',
-                    transitOptions: {
-                        modes: ['BUS']
-                    },
-                    // unitSystem: google.maps.UnitSystem.IMPERIAL
-                    // origin: 'Hoboken NJ',
-                    // destination: 'Carroll Gardens, Brooklyn',
-                    // travelMode: 'TRANSIT',
-                    // transitOptions: {
-                    //     departureTime: new Date(1337675679473),
-                    //     modes: ['BUS'],
-                    //     routingPreference: 'FEWER_TRANSFERS'
-                    // },
-                    // unitSystem: google.maps.UnitSystem.IMPERIAL
-                };
-
-                // directionsService.route(request, function(response, status) {
-                //     if (status == "OK") {
-                //         console.log(response);
-                //     } else {
-                //         console.log(status);
-                //     }
-                // });
-
+                // Marker events
                 google.maps.event.addListener(curMarker, 'click', function() {
 
                     var content,
                         markerHoverIcon,
-                        markerWindowIcon,
-                        transportStation = false;
+                        markerWindowIcon;
                     
                     place.types.forEach(function (elem) {
                         switch (elem) {
@@ -543,17 +519,14 @@
                             case 'train_station':
                                 markerWindowIcon = '../img/location/train_station.png';
                                 markerHoverIcon = '../img/location/location_train_station-hover.png';
-                                transportStation = true;
                                 break;
                             case 'bus_station':
                                 markerWindowIcon = '../img/location/bus_station.png';
                                 markerHoverIcon = '../img/location/location_bus_station-hover.png';
-                                transportStation = true;
                                 break;
                             case 'subway_station':
                                 markerWindowIcon = '../img/location/metro_station.png';
                                 markerHoverIcon = '../img/location/location_metro_station-hover.png';
-                                transportStation = true;
                                 break;
                             default:
                                 break;
@@ -562,24 +535,6 @@
 
                     content = '<div class="map__info-window-wrap"><img src="' + markerWindowIcon + '">' +
                         '<span class="map__info-window-name">' + place.name + '</span></div>';
-
-                    // if ( transportStation ) {
-                    //     content = '<div class="map__info-window-wrap"><img src="' + markerWindowIcon + '">' +
-                    //         '<span class="map__info-window-name">' + place.name + '</span></div>' +
-                    //         '<div class="stations">' +
-                    //         '<div class="stations__item">' +
-                    //         '<dl>' +
-                    //         '<dt>Lignes:</dt>' +
-                    //         '<dd>' +
-                    //         '<span class="stations__number color7">126</span>' +
-                    //         '<span class="stations__number color8">127</span>' +
-                    //         '<span class="stations__number color9">128</span>' +
-                    //         '<span class="stations__number color10">129</span>' +
-                    //         '<span class="stations__number color11">620</span>' +
-                    //         '</dd>' +
-                    //         '</dl>' +
-                    //         '</div></div>';
-                    // }
 
                     if ( _clickedMarker ) {
                         _clickedMarker.setIcon(_clickedMarkerIcon);
@@ -594,6 +549,7 @@
                     curMarker.setIcon(markerHoverIcon);
                 });
 
+                // Map events
                 google.maps.event.addListener(_map, 'click', function() {
                     if ( _clickedMarker ) {
                         _clickedMarker.setIcon(_clickedMarkerIcon);
