@@ -499,13 +499,13 @@
                     // unitSystem: google.maps.UnitSystem.IMPERIAL
                 };
 
-                directionsService.route(request, function(response, status) {
-                    if (status == "OK") {
-                        console.log(response);
-                    } else {
-                        console.log(status);
-                    }
-                });
+                // directionsService.route(request, function(response, status) {
+                //     if (status == "OK") {
+                //         console.log(response);
+                //     } else {
+                //         console.log(status);
+                //     }
+                // });
 
                 google.maps.event.addListener(curMarker, 'click', function() {
 
