@@ -40,12 +40,6 @@
     &:hover,
     &.active {
       border-color: #ff4d00;
-
-      ul li:before { opacity: 1 }
-
-      .select-appartment__item-footer {
-        opacity: .5;
-      }
     }
 
     &.disable {
