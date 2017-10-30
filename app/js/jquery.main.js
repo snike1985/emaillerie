@@ -155,6 +155,9 @@
                 _window.on({
                     scroll: function () {
                         _checkScroll();
+                    },
+                    load: function () {
+                        _checkScroll();
                     }
                 });
             },
@@ -168,7 +171,7 @@
 
                 $(_list).css({ 'animation-duration': _maxCount*_letterDuration + 'ms' });
 
-                _checkScroll();
+                // _checkScroll();
             },
             _checkScroll = function(){
 
