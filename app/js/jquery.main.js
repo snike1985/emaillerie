@@ -23,6 +23,10 @@
             new Map( $(this) );
         } );
 
+        $('.menu').each( function() {
+            new Menu( $(this) );
+        } );
+
         $('.site').each( function() {
             new Site( $(this) );
         } );
@@ -571,6 +575,50 @@
             _init = function() {
                 _addEvents();
                 _initMap();
+            };
+
+        //public properties
+
+        //public methods
+
+        _init();
+    };
+
+    var Menu = function(obj) {
+
+        //private properties
+        var _obj = obj,
+            _item = _obj.find( '.menu__item' );
+
+        //private methods
+        var _addEvents = function() {
+
+                _item.on({
+                    'click': function(event) {
+                        event.preventDefault();
+                        var elem = $( this ),
+                            id = elem.attr( 'href' ),
+                            way = $( id ).offset().top + 1,
+                            duration = 1000,
+                            scrollWrap = $( 'body, html' );
+
+                        if ( !elem.hasClass( 'active' ) ) {
+                            scrollWrap.animate( { scrollTop: way }, way/5 );
+
+                            // setTimeout( function () {
+                            //     scrollWrap.animate( { scrollTop: way - 1 }, 1 );
+                            // }, duration );
+
+                            _item.removeClass( 'active' );
+                            elem.addClass( 'active' );
+                        }
+
+                    }
+                });
+
+            },
+            _init = function() {
+                _addEvents();
             };
 
         //public properties
