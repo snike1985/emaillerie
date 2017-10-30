@@ -253,6 +253,19 @@
       }
     }
 
+    &_house {
+
+      .plan__build {
+
+        &:before {
+          top: 5%;
+        }
+        &:after {
+          top: calc(5% + 64px);
+        }
+      }
+    }
+
     &__build {
 
       &:before {

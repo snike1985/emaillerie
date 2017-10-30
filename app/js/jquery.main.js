@@ -23,8 +23,8 @@
             new Map( $(this) );
         } );
 
-        $('.menu').each( function() {
-            new Menu( $(this) );
+        $('.anchor').each( function() {
+            new Anchor( $(this) );
         } );
 
         $('.site').each( function() {
@@ -584,34 +584,26 @@
         _init();
     };
 
-    var Menu = function(obj) {
+    var Anchor = function(obj) {
 
         //private properties
         var _obj = obj,
-            _item = _obj.find( '.menu__item' );
+            _item = _obj.find( '.anchor__item' );
 
         //private methods
         var _addEvents = function() {
 
                 _item.on({
                     'click': function(event) {
+
                         event.preventDefault();
                         var elem = $( this ),
                             id = elem.attr( 'href' ),
                             way = $( id ).offset().top + 1,
-                            duration = 1000,
+                            duration = way/3,
                             scrollWrap = $( 'body, html' );
 
-                        if ( !elem.hasClass( 'active' ) ) {
-                            scrollWrap.animate( { scrollTop: way }, way/5 );
-
-                            // setTimeout( function () {
-                            //     scrollWrap.animate( { scrollTop: way - 1 }, 1 );
-                            // }, duration );
-
-                            _item.removeClass( 'active' );
-                            elem.addClass( 'active' );
-                        }
+                        scrollWrap.animate( { scrollTop: way }, duration );
 
                     }
                 });
