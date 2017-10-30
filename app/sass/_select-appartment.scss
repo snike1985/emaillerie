@@ -31,14 +31,25 @@
     min-height: 480px;
     margin: 0 auto 40px;
     padding: 38px 15px;
-    border: 4px solid #ff4d00;
+    border: 4px solid transparent;
     background-color: rgb(255, 255, 255);
     box-shadow: 0 16px 20px 0 rgba(0, 0, 0, 0.05);
     transition: border .3s ease-in-out;
 
     &:hover,
     &.active {
-      border-color: transparent;
+      border-color: #ff4d00;
+
+      ul li:before { opacity: 1 }
+
+      .select-appartment__item-footer {
+        opacity: .5;
+      }
+    }
+
+    &.disable {
+      pointer-events: none;
+      cursor: default;
 
       ul li:before { opacity: 1 }
 
@@ -198,7 +209,7 @@
       min-height: 568px;
       margin: 0 24px;
       padding: 48px 40px;
-      border: 8px solid #ff4d00;
+      border-width: 8px;
 
       &-head {
         font-size: 16px;
