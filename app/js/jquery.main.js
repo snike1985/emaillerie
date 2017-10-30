@@ -3,8 +3,16 @@
 
     $(function(){
 
+        $('.anchor').each( function() {
+            new Anchor( $(this) );
+        } );
+
         $('.callback').each( function() {
             new Callback( $(this) );
+        } );
+
+        $('.count').each( function() {
+            new Count( $(this) );
         } );
 
         $('.site__header').each( function() {
@@ -23,10 +31,6 @@
             new Map( $(this) );
         } );
 
-        $('.anchor').each( function() {
-            new Anchor( $(this) );
-        } );
-
         $('.site').each( function() {
             new Site( $(this) );
         } );
@@ -40,6 +44,42 @@
         } );
 
     });
+
+    var Anchor = function(obj) {
+
+        //private properties
+        var _obj = obj,
+            _item = _obj.find( '.anchor__item' );
+
+        //private methods
+        var _addEvents = function() {
+
+                _item.on({
+                    'click': function(event) {
+
+                        event.preventDefault();
+                        var elem = $( this ),
+                            id = elem.attr( 'href' ),
+                            way = $( id ).offset().top + 1,
+                            duration = way/3,
+                            scrollWrap = $( 'body, html' );
+
+                        scrollWrap.animate( { scrollTop: way }, duration );
+
+                    }
+                });
+
+            },
+            _init = function() {
+                _addEvents();
+            };
+
+        //public properties
+
+        //public methods
+
+        _init();
+    };
 
     var Callback = function(obj) {
 
@@ -91,6 +131,58 @@
             },
             _init = function() {
                 _addEvents();
+            };
+
+        //public properties
+
+        //public methods
+
+        _init();
+    };
+
+    var Count = function ( obj ) {
+
+        //private properties
+        var _self = this,
+            _obj = obj,
+            _list = document.createElement('span'),
+            _window = $( window ),
+            _maxCount = _obj.data('max')*1,
+            _letterDuration = _obj.data('duration')*1;
+
+        //private methods
+        var _onEvents = function () {
+                _window.on({
+                    scroll: function () {
+                        _checkScroll();
+                    }
+                });
+            },
+            _createList = function () {
+                $(_list).addClass('count__list');
+                _obj.append(_list);
+
+                for (var i = 0; i < _maxCount; i++) {
+                    $(_list).prepend('<i>' + (i + 1) + '</i>');
+                }
+
+                $(_list).css({ 'animation-duration': _maxCount*_letterDuration + 'ms' });
+
+                _checkScroll();
+            },
+            _checkScroll = function(){
+
+                var windowH = _window.height() + _window.scrollTop();
+
+                if ( windowH > _obj.offset().top ) {
+                    _obj.addClass('active');
+                }
+
+            },
+            _init = function () {
+                _obj[0].slides = _self;
+                _onEvents();
+                _createList();
             };
 
         //public properties
@@ -575,42 +667,6 @@
             _init = function() {
                 _addEvents();
                 _initMap();
-            };
-
-        //public properties
-
-        //public methods
-
-        _init();
-    };
-
-    var Anchor = function(obj) {
-
-        //private properties
-        var _obj = obj,
-            _item = _obj.find( '.anchor__item' );
-
-        //private methods
-        var _addEvents = function() {
-
-                _item.on({
-                    'click': function(event) {
-
-                        event.preventDefault();
-                        var elem = $( this ),
-                            id = elem.attr( 'href' ),
-                            way = $( id ).offset().top + 1,
-                            duration = way/3,
-                            scrollWrap = $( 'body, html' );
-
-                        scrollWrap.animate( { scrollTop: way }, duration );
-
-                    }
-                });
-
-            },
-            _init = function() {
-                _addEvents();
             };
 
         //public properties
