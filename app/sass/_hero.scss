@@ -4,7 +4,7 @@
   justify-content: center;
   height: calc(100vh - 30px);
   padding: 75px 15px;
-  background-image: url("../img/hero-bg-mobile.jpg");
+  background-image: url("../img/hero-bg.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -40,7 +40,6 @@
   .hero {
     height: calc(100vh - 55px);
     max-height: 1001px;
-    background-image: url("../img/hero-bg.jpg");
 
     &__content {
       font-size: 48px;

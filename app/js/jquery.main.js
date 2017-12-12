@@ -445,6 +445,16 @@
                                         radius: _searchRadius,
                                         types: [filterType]
                                     };
+                                
+                                if ( filterType === 'store' ) {
+                                    _createMarker({
+                                        types: ['store'],
+                                        geometry: {
+                                            location: {lat: 50.848980, lng: 4.320923}
+                                        },
+                                        name: 'Shop & go Delhaize'
+                                    });
+                                }
 
                                 service = new google.maps.places.PlacesService(_map);
                                 service.nearbySearch(request, _placeServiceCallback);
